@@ -1,0 +1,65 @@
+.headerBackBtn {
+  display: flex;
+  align-items: center;
+}
+
+.form {
+  width: 83.3%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.form > div {
+  margin-bottom: 20px;
+  line-height: 2;
+}
+
+.form * textarea {
+  resize: none;
+}
+
+#toggleDiv {
+  display: inline-flex;
+  align-items: center;
+
+  font-size: 0.8rem;
+  color: #B05B3B;
+}
+
+.formSubmit {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Inputs */
+#name, #category, #expireInDays, #expireDate, #comment {
+  font-size: 1rem;
+  line-height: 1.5;
+
+  border: 1.5px solid gray;
+  border-radius: 4px;
+}
+
+#name, #category, #expireDate, #comment {
+  width: 100%;
+}
+
+#name, #category, #expireInDays, #expireDate {
+  text-align: center;
+}
+
+#category {
+  padding: 5px 0 5px 15px;
+
+  text-align-last: center;
+}
+
+option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#expireInDays {
+  width: 2.5rem;
+}
