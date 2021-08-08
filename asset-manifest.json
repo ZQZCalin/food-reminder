@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/food-reminder/static/css/main.3a6e1aaf.chunk.css",
-    "main.js": "/food-reminder/static/js/main.167e8ca2.chunk.js",
-    "main.js.map": "/food-reminder/static/js/main.167e8ca2.chunk.js.map",
+    "main.css": "/food-reminder/static/css/main.5adcf736.chunk.css",
+    "main.js": "/food-reminder/static/js/main.f7cab9e0.chunk.js",
+    "main.js.map": "/food-reminder/static/js/main.f7cab9e0.chunk.js.map",
     "runtime-main.js": "/food-reminder/static/js/runtime-main.e897fcdc.js",
     "runtime-main.js.map": "/food-reminder/static/js/runtime-main.e897fcdc.js.map",
-    "static/js/2.2ab79084.chunk.js": "/food-reminder/static/js/2.2ab79084.chunk.js",
-    "static/js/2.2ab79084.chunk.js.map": "/food-reminder/static/js/2.2ab79084.chunk.js.map",
+    "static/js/2.e929867c.chunk.js": "/food-reminder/static/js/2.e929867c.chunk.js",
+    "static/js/2.e929867c.chunk.js.map": "/food-reminder/static/js/2.e929867c.chunk.js.map",
     "index.html": "/food-reminder/index.html",
-    "static/css/main.3a6e1aaf.chunk.css.map": "/food-reminder/static/css/main.3a6e1aaf.chunk.css.map",
-    "static/js/2.2ab79084.chunk.js.LICENSE.txt": "/food-reminder/static/js/2.2ab79084.chunk.js.LICENSE.txt"
+    "static/css/main.5adcf736.chunk.css.map": "/food-reminder/static/css/main.5adcf736.chunk.css.map",
+    "static/js/2.e929867c.chunk.js.LICENSE.txt": "/food-reminder/static/js/2.e929867c.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.e897fcdc.js",
-    "static/js/2.2ab79084.chunk.js",
-    "static/css/main.3a6e1aaf.chunk.css",
-    "static/js/main.167e8ca2.chunk.js"
+    "static/js/2.e929867c.chunk.js",
+    "static/css/main.5adcf736.chunk.css",
+    "static/js/main.f7cab9e0.chunk.js"
   ]
 }
