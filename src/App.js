@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 // pages
 import Home from './pages/Home';
 import Account from './pages/Account';
@@ -24,6 +24,7 @@ function App() {
           </Route>
 
           <Route path='/'>
+            <Redirect to='/home' />
             <div>
               Empty Page
             </div>
