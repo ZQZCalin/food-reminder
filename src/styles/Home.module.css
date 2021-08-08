@@ -2,7 +2,8 @@
 
 /* Item Tag */
 .itemTag {
-  box-shadow: 3px 3px 8px rgb(207, 207, 207);
+  /* box-shadow: 3px 3px 8px rgb(207, 207, 207); */
+  /* this line is moved to js */
 
   border-radius: 5px;
   border-right: 5px solid;

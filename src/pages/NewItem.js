@@ -12,25 +12,67 @@ import { strDateSubtract } from "../utils/dateSubtract";
 import { NewItemContext } from "../contexts/NewItemContext";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import SaveIcon from '@material-ui/icons/Save';
+import { UserDataContext } from "../utils/data";
+import { strDateCompare } from "../utils/dateCompare";
+import { v4 as uuidv4 } from 'uuid';
 
 function NewPage() {
 
   const history = useHistory();
 
+  // save item / edit item
+  const { addItem, editItem } = useContext(UserDataContext);
+
   // form context
   const {
-    name, setName, category, setCategory, comment, setComment,
+    id, setId, name, setName, category, setCategory, comment, setComment,
     expireDate, setExpireDate, expireInDays, setExpireInDays,
     resetNewItem,
   } = useContext(NewItemContext);
 
   const [toggleTime, setToggleTime] = useState(false); // true: time picker; false: xxx days from now
 
-  // submission
+  // submission: save or edit item
   const handleSubmit = () => {
-    console.log(
-      name, category, expireDate, comment,
-    );
+    const newItem = {
+      id: id,
+      name: name,
+      category: category,
+      expireDate: expireDate,
+      comment: comment,
+    };
+
+    // validation schema
+    let error = [];
+    if (name === "") {
+      error.push("请输入名字");
+    }
+    if (category === "") {
+      error.push("请选择种类");
+    }
+    if (strDateCompare(expireDate, dateParser(new Date())) == -1 ) {
+      error.push("过期日期不能为过去的日期");
+    }
+    if (error.length != 0) {
+      alert(error.join("\n"));  // error message
+      return null;
+    }
+
+    // save to database
+    if (id === "") {
+      // save item
+      addItem({
+        ...newItem,
+        id: uuidv4(),
+      });
+    } else {
+      // edit item
+      editItem(newItem);
+    }
+
+    // reset and redirect
+    resetNewItem();
+    history.push("./home");
   };
 
   // DOM
@@ -79,8 +121,8 @@ function NewPage() {
               onChange={(e) => {
                 setExpireDate(e.target.value);
                 setExpireInDays(strDateSubtract(
-                  dateParser(new Date()), e.target.value
-                ))
+                  e.target.value, dateParser(new Date())
+                ));
               }}
             /> :
             <div style={{ textAlign: "center" }}>
@@ -96,11 +138,6 @@ function NewPage() {
             </div>
           }
         </div>
-
-        {/* <div> For test purpose:
-          {strDateAdd("2021-08-04", 2)} <br/>
-          {strDateSubtract(dateParser(new Date()), "2021-08-06")}
-        </div> */}
 
         <div>
           <label htmlFor={css.comment} >备注</label> <br />

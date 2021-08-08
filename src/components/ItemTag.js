@@ -11,6 +11,8 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { NewItemContext } from '../contexts/NewItemContext.js';
+import { strDateCompare } from '../utils/dateCompare.js';
+import { UserDataContext } from '../utils/data.js';
 
 const DialogContext = createContext();
 
@@ -27,17 +29,21 @@ function ItemTag({ item }) {
 
   // delete dialog
   const [open, setOpen] = useState(false);
-  const deleteItem = () => {
-    console.log("deleted");
-    setOpen(false);
+
+  // delete function
+  const { deleteItem } = useContext(UserDataContext);
+  const handleDelete = () => {
+    deleteItem(item);
+    setOpen(false);   // close dialog
   };
 
   // attr
   const category = categories.find(category => category.id === item.category);
-  const diff = strDateSubtract(dateParser(new Date()), item.expireDate);
+  const diff = strDateSubtract(item.expireDate, dateParser(new Date()));
+  const isExpired = diff < 0;
 
   let clockColor;
-  if (diff <= 3) {
+  if (isExpired || diff <= 3) {
     clockColor = "#c23b0a"; // red
   } else if (diff <= 7) {
     clockColor = "#cf9911"; // orange
@@ -49,20 +55,23 @@ function ItemTag({ item }) {
 
   // module
   return (
-    <DialogContext.Provider value={{ open, setOpen, deleteItem }} >
+    <DialogContext.Provider value={{ open, setOpen, handleDelete }} >
       <div className={css.itemTag} onClick={handleClick} style={{
-        borderColor: borderColor
+        borderColor: borderColor, 
+        boxShadow: isExpired ? "3px 3px 8px #c23b0a" : "3px 3px 8px #cfcfcf",
       }} >
         <div className={css.itemTagName}>
           {item.name}
         </div>
-        <div className={css.itemTagTime}>
+        <div className={css.itemTagTime} style={{color: isExpired? "red" : "inherit"}} >
           <ScheduleIcon style={{
             color: clockColor,
           }} />
-          {diff <= 7 ?
-            `${strDateSubtract(dateParser(new Date()), item.expireDate)} 天后过期` :
-            `${item.expireDate} 过期`
+          {isExpired ?
+            "已经过期" :
+            (diff <= 7 ?
+              `${diff} 天后过期` :
+              `${item.expireDate} 过期`)
           }
         </div>
         {item.id === focus && item.comment && item.comment !== "" &&
@@ -72,7 +81,10 @@ function ItemTag({ item }) {
           <div className={css.itemTagMore}>
             <InfoOutlinedIcon style={{ color: "#43a047" }}
               onClick={() => {
-                setNewItem(item.name, item.category, item.expireDate, item.comment);
+                setNewItem({
+                  _id: item.id, _name: item.name, _category: item.category,
+                  _expireDate: item.expireDate, _comment: item.comment,
+                });
                 history.push('./new-item');
               }} />
             <CancelIcon color="secondary" style={{ marginLeft: "5px" }}
@@ -86,7 +98,7 @@ function ItemTag({ item }) {
 }
 
 function DeleteDialog() {
-  const { open, setOpen, deleteItem } = useContext(DialogContext);
+  const { open, setOpen, handleDelete } = useContext(DialogContext);
   const handleClose = () => { setOpen(false) };
 
   return (
@@ -95,7 +107,7 @@ function DeleteDialog() {
       <DialogContent>是否要删除这项物品？一旦确认，该物品将被永久删除。</DialogContent>
       <DialogActions>
         <div onClick={handleClose} className={css.dialogCancelBtn} >取消</div>
-        <div onClick={deleteItem} className={css.dialogConfirmBtn} >确认</div>
+        <div onClick={handleDelete} className={css.dialogConfirmBtn} >确认</div>
       </DialogActions>
     </Dialog>
   )

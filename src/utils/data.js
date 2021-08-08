@@ -1,3 +1,4 @@
+import { createContext, useState } from "react";
 
 export const data = [
   {
@@ -22,3 +23,35 @@ export const data = [
     comment: "冷藏第三层",
   }
 ];
+
+export const UserDataContext = createContext();
+
+function UserDataContextProvider(props) {
+
+  const [userData, setUserData] = useState(data);
+
+  // add new item
+  const addItem = (_item) => {
+    setUserData(userData.concat([_item]));
+  };
+
+  // delete existing item
+  const deleteItem = (_item) => {
+    setUserData(userData.filter(item => item.id !== _item.id));
+  };
+
+  // edit existing item
+  const editItem = (_item) => {
+    setUserData(userData.map(item => item.id !== _item.id ? item : _item ));
+  };
+
+  return (
+    <UserDataContext.Provider value={{
+      userData, addItem, deleteItem, editItem,
+    }} >
+      {props.children}
+    </UserDataContext.Provider>
+  );
+}
+
+export default UserDataContextProvider;
