@@ -15,10 +15,12 @@ import SaveIcon from '@material-ui/icons/Save';
 import { UserDataContext } from "../utils/data";
 import { strDateCompare } from "../utils/dateCompare";
 import { v4 as uuidv4 } from 'uuid';
+import Waiting from "../components/Waiting";
 
 function NewPage() {
 
   const history = useHistory();
+  const { userData } = useContext(UserDataContext);
 
   // save item / edit item
   const { addItem, editItem } = useContext(UserDataContext);
@@ -72,14 +74,19 @@ function NewPage() {
 
     // reset and redirect
     resetNewItem();
-    history.push("./home");
+    history.push("./home");  // moved to addItm, editItem functions
   };
+
+  // loading page
+  if (!userData) {
+    return <Waiting />
+  }
 
   // DOM
   return (
     <div>
       <div className={cssHome.toolbar}>
-        <div className={css.headerBackBtn} onClick={() => { history.goBack() }} >
+        <div className={css.headerBackBtn} onClick={() => { history.push('./home') }} >
           <ArrowBackOutlinedIcon /> 返回
         </div>
       </div>

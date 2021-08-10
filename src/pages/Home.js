@@ -6,6 +6,7 @@ import { UserDataContext } from "../utils/data";
 import { categories } from "../utils/categoryData";
 import Toolbar from "../components/Toolbar";
 import { strDateCompare } from "../utils/dateCompare";
+import Waiting from "../components/Waiting";
 
 export const ToolbarContext = createContext();
 export const ItemContext = createContext();
@@ -23,6 +24,11 @@ function Home() {
   const [sort, setSort] = useState(false); // true: sort by time; false: sort by category
 
   // clear focus upon state change
+
+  // loading page
+  if (!userData) {
+    return <Waiting />;
+  }
 
   // module
   return (

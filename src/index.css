@@ -19,3 +19,7 @@ code {
 body {
   overflow: auto;
 }
+
+html, body, #root {
+  height: 100%
+}

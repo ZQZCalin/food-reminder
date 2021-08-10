@@ -4,15 +4,18 @@ import Home from './pages/Home';
 import Account from './pages/Account';
 import NewPage from './pages/NewItem';
 import NewItemContextProvider from './contexts/NewItemContext';
-import UserDataContextProvider from './utils/data';
+import UserDataContextProvider, { UserDataContext } from './utils/data';
+import Login from './pages/Login';
+import { useContext } from 'react';
+import AuthContextProvider from './contexts/AuthContext';
 
 function App() {
 
   return (
-    <div>
+    <Router basename={process.env.PUBLIC_URL}>
       <UserDataContextProvider>
-        <NewItemContextProvider>
-          <Router basename={process.env.PUBLIC_URL}>
+        <AuthContextProvider>
+          <NewItemContextProvider>
             <Switch>
               <Route path='/home'>
                 <Home />
@@ -26,17 +29,18 @@ function App() {
                 <Account />
               </Route>
 
+              <Route path='/login'>
+                <Login />
+              </Route>
+
               <Route path='/'>
-                <Redirect to='/home' />
-                <div>
-                  Empty Page
-                </div>
+                <Redirect to='/login' />
               </Route>
             </Switch>
-          </Router>
-        </NewItemContextProvider>
+          </NewItemContextProvider>
+        </AuthContextProvider>
       </UserDataContextProvider>
-    </div>
+    </Router>
   );
 }
 
