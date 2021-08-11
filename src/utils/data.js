@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { db } from "../contexts/AuthContext";
+// import { db } from "../contexts/AuthContext";
 
 export const data = [
   {
